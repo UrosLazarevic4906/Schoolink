@@ -37,7 +37,7 @@ fun SchoolinkTheme(
     val colorScheme =LightColorScheme
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        typography = SfProTypography,
         content = content
     )
 }

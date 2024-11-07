@@ -38,12 +38,12 @@ fun OnboardingScreen() {
         ),
         Triple(
             R.drawable.onboarding_team_at_work_solid,
-            "Effortlessly Manage Students",
+            "Effortlessly Manage Students!",
             "Keep track of attendance, assignments, and performance for each student."
         ),
         Triple(
             R.drawable.onboarding_team_at_work_2,
-            "Organize and Connect Groups",
+            "Organize and Connect Groups!",
             "Easily create and manage school groups, making communication and collaboration more effective."
         )
     )
@@ -87,7 +87,7 @@ fun OnboardingScreen() {
                     Text(
                         text = title,
                         style = MaterialTheme.typography.displaySmall,
-                        fontWeight = FontWeight.Bold,
+                        fontWeight = FontWeight.ExtraBold,
                         color = Black,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.padding(top = 32.dp, start = 32.dp, end = 32.dp)
