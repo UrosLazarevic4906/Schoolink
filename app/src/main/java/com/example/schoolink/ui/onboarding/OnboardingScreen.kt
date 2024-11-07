@@ -53,7 +53,7 @@ fun OnboardingScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-//            .border(1.dp, Color.Cyan)
+            .background(MaterialTheme.colorScheme.background)
             .padding(horizontal = 24.dp, vertical = 32.dp),
         verticalArrangement = Arrangement.SpaceAround,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -66,7 +66,6 @@ fun OnboardingScreen() {
                     .fillMaxWidth()
                     .height(500.dp)
                     .align(Alignment.CenterHorizontally)
-//                    .border(3.dp, Color.Red)
                     .padding(top = 56.dp)
             ) {
                 Column(
