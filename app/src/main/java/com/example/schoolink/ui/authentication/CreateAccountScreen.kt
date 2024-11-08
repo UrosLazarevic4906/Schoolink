@@ -40,7 +40,7 @@ fun CreateAccountScreen() {
     val focusManager = LocalFocusManager.current
 
     SchoolinkTheme {
-        Column (
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
@@ -52,28 +52,28 @@ fun CreateAccountScreen() {
                     interactionSource = remember { MutableInteractionSource() }
                 ),
             verticalArrangement = Arrangement.SpaceBetween
-        ){
-            LazyColumn (
+        ) {
+            LazyColumn(
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f),
                 verticalArrangement = Arrangement.spacedBy(32.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
-            ){
-               item {
-                   AuthenticationHeader(
-                       onBackClick = { /* ToDo: handle on back click */},
-                       title = "Create an account",
-                       description = "We’ll send you a verification code to your email in order to verify your account."
-                   )
-               }
+            ) {
+                item {
+                    AuthenticationHeader(
+                        onBackClick = { /* ToDo: handle on back click */ },
+                        title = "Create an account",
+                        description = "We’ll send you a verification code to your email in order to verify your account."
+                    )
+                }
 
                 item {
                     EmailInputField(value = email, onValueChange = { email = it })
                 }
 
                 item {
-                    PasswordInputField(value = password, onValueChange = { password = it})
+                    PasswordInputField(value = password, onValueChange = { password = it })
                 }
 
                 item {
@@ -86,11 +86,11 @@ fun CreateAccountScreen() {
 
             }
 
-            Column (
+            Column(
                 modifier = Modifier.fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
-            ){
+            ) {
                 Button(
                     onClick = { /* ToDo: Handle create account click */ },
                     modifier = Modifier
@@ -100,27 +100,42 @@ fun CreateAccountScreen() {
                 ) {
                     Text(text = "Create account")
                 }
-                Row(
+
+
+                Column(
                     modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.Start,
+                    verticalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text(text = "By tapping on \"Create account\" you agree to our ", color = MaterialTheme.colorScheme.onBackground)
-                    InteractionText(
-                        text = "Terms & Conditions",
-                        onClick = { /* TODO: Handle Terms & Conditions click */ }
+                    Text(
+                        text = "By tapping on “Create account” you agree to our",
+                        color = MaterialTheme.colorScheme.onBackground,
+                        style = MaterialTheme.typography.bodyMedium
                     )
-                    Text(text = " and ", color = MaterialTheme.colorScheme.onBackground)
-                    InteractionText(
-                        text = "Privacy Policy.",
-                        onClick = { /* TODO: Handle Privacy Policy click */ }
-                    )
+                    Row {
+                        InteractionText(
+                            text = "Terms & Conditions",
+                            onClick = { /* ToDo: Handle terms click */ }
+                        )
+                        Text(" and ", color = MaterialTheme.colorScheme.onBackground)
+                        InteractionText(
+                            text = "Privacy Policy.",
+                            onClick = { /* ToDo: Handle privacy policy click */ }
+                        )
+                    }
                 }
+
+
+
             }
         }
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
-private fun CreateAccountScreenPreview() {
+private fun CreateAccountPreview() {
+
     CreateAccountScreen()
+
 }
