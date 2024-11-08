@@ -1,6 +1,5 @@
 package com.example.schoolink.ui.components.inputs
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -8,55 +7,43 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
-import com.example.schoolink.R // Adjust import to match your package structure
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.schoolink.ui.theme.*
 
 @Composable
-fun PasswordInputField(
-    value: String,
-    onValueChange: (String) -> Unit,
+fun ConfirmPasswordInputField(
+    password: String,
+    confirmPassword: String,
+    onConfirmPasswordChange: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var isValid by remember { mutableStateOf(true) }
-    var passwordVisible by remember { mutableStateOf(false) }
+    var isMatch by remember { mutableStateOf(true) }
 
-    LaunchedEffect(value) {
-        // Custom password validation logic
-        isValid = value.length > 8 &&
-                value.any { it.isUpperCase() } &&
-                value.any { it.isDigit() || !it.isLetterOrDigit() } &&
-                !value.contains(' ')
+    LaunchedEffect(password, confirmPassword) {
+        isMatch = confirmPassword.isEmpty() || confirmPassword == password
     }
 
     val labelColor = when {
-        value.isEmpty() -> Smoke
-        isValid -> Green
+        confirmPassword.isEmpty() -> Smoke
+        isMatch -> Green
         else -> Color.Red
     }
 
     OutlinedTextField(
-        value = value,
-        onValueChange = onValueChange,
-        label = { Text(text = "Password", color = labelColor) },
+        value = confirmPassword,
+        onValueChange = onConfirmPasswordChange,
+        label = { Text(text = "Confirm Password", color = labelColor) },
         singleLine = true,
         modifier = modifier.fillMaxWidth(),
-        visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+        visualTransformation = PasswordVisualTransformation(),
         keyboardOptions = KeyboardOptions.Default.copy(
-            imeAction = ImeAction.Next,
+            imeAction = ImeAction.Done,
             keyboardType = KeyboardType.Password
         ),
         keyboardActions = KeyboardActions.Default,
-        trailingIcon = {
-            val iconResId = if (passwordVisible) R.drawable.ic_eye_open else R.drawable.ic_eye_closed
-            IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                Image(painter = painterResource(id = iconResId), contentDescription = if (passwordVisible) "Hide password" else "Show password")
-            }
-        },
         colors = OutlinedTextFieldDefaults.colors(
             focusedBorderColor = MaterialTheme.colorScheme.secondary,
             unfocusedBorderColor = Smoke,
@@ -67,4 +54,10 @@ fun PasswordInputField(
             focusedTrailingIconColor = MaterialTheme.colorScheme.secondary
         )
     )
+}
+
+@Preview
+@Composable
+private fun ConfirmPasswordInputFieldPreview() {
+    ConfirmPasswordInputField("", "", onConfirmPasswordChange = {})
 }
