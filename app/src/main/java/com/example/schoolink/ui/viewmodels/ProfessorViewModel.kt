@@ -4,14 +4,27 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.schoolink.domain.models.ProfessorModel
 import com.example.schoolink.domain.repository.ProfessorRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class ProfessorViewModel(
-    private val repository: ProfessorRepository
-) : ViewModel() {
-    fun addProfessor(professorModel: ProfessorModel) {
+class ProfessorViewModel(private val repository: ProfessorRepository) : ViewModel() {
+
+    var currentProfessor: ProfessorModel? = null
+
+    fun getProfessorByEmail(email: String, onResult: (ProfessorModel?) -> Unit) {
         viewModelScope.launch {
-            repository.insertProfessor(professorModel)
+            val professor = withContext(Dispatchers.IO) {
+                repository.getProfessorByEmail(email)
+            }
+            currentProfessor = professor
+            onResult(professor)
+        }
+    }
+
+    fun addProfessor(professor: ProfessorModel) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.insertProfessor(professor)
         }
     }
 }

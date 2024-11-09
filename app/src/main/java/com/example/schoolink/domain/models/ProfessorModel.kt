@@ -1,7 +1,7 @@
 package com.example.schoolink.domain.models
 
 data class ProfessorModel(
-    val id: Int,
+    val id: Int = 0,
     val email: String,
     val password: String,
     val profilePicturePath: String?,

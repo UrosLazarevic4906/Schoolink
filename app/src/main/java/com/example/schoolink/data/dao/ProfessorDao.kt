@@ -9,7 +9,7 @@ import com.example.schoolink.data.entities.ProfessorEntity
 @Dao
 interface ProfessorDao{
 
-    @Insert(onConflict = OnConflictStrategy.ABORT)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertProfessor(professor: ProfessorEntity)
 
     @Query("SELECT * FROM professors WHERE email = :email")
