@@ -3,7 +3,7 @@ package com.example.schoolink
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.example.schoolink.ui.authentication.CreateAccountScreen
+import com.example.schoolink.ui.navigation.AppNavigation
 import com.example.schoolink.ui.theme.SchoolinkTheme
 
 class MainActivity : ComponentActivity() {
@@ -11,7 +11,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             SchoolinkTheme {
-                CreateAccountScreen()
+                AppNavigation()
             }
         }
     }

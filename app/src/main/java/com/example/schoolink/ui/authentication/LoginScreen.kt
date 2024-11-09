@@ -6,6 +6,7 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -18,14 +19,20 @@ import com.example.schoolink.ui.authentication.components.AuthenticationHeader
 import com.example.schoolink.ui.components.InteractionText
 import com.example.schoolink.ui.components.inputs.EmailInputField
 import com.example.schoolink.ui.components.inputs.PasswordInputField
-import com.example.schoolink.ui.theme.SchoolinkTheme
+import com.example.schoolink.ui.theme.*
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(
+    onBack: () -> Unit,
+    onNavigateToCreateAccount: () -> Unit
+) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var isEmailValid by remember { mutableStateOf(false) }
+    var isPasswordValid by remember { mutableStateOf(false) }
 
     val focusManager = LocalFocusManager.current
+    val isFormValid = isEmailValid && isPasswordValid
 
     SchoolinkTheme {
         Column(
@@ -35,7 +42,7 @@ fun LoginScreen() {
                 .imePadding()
                 .padding(horizontal = 24.dp, vertical = 32.dp)
                 .clickable(
-                    onClick = { focusManager.clearFocus()},
+                    onClick = { focusManager.clearFocus() },
                     indication = null,
                     interactionSource = remember { MutableInteractionSource() }
                 ),
@@ -50,18 +57,24 @@ fun LoginScreen() {
             ) {
                 item {
                     AuthenticationHeader(
-                        onBackClick = { /* ToDo: handle on back click */ },
+                        onBackClick = onBack,
                         title = "Welcome Back",
-                        description = "Enter your email address or employee ID and password to access your account."
+                        description = "Enter your email address and password to access your account."
                     )
                 }
 
                 item {
-                    EmailInputField(value = email, onValueChange = { email = it })
+                    EmailInputField(
+                        value = email,
+                        IsValid = { isEmailValid = it },
+                        onValueChange = { email = it })
                 }
 
                 item {
-                    PasswordInputField(value = password, onValueChange = { password = it })
+                    PasswordInputField(
+                        value = password,
+                        IsValid = { isPasswordValid = it },
+                        onValueChange = { password = it })
                 }
             }
 
@@ -72,6 +85,13 @@ fun LoginScreen() {
             ) {
                 Button(
                     onClick = { /*ToDo: Handle login click */ },
+                    enabled = isFormValid,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary,
+                        disabledContainerColor = DissabledButton,
+                        disabledContentColor = MaterialTheme.colorScheme.onPrimary
+                    ),
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(48.dp)
@@ -83,11 +103,15 @@ fun LoginScreen() {
                     horizontalArrangement = Arrangement.Center,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text("Don't have an account?", color = MaterialTheme.colorScheme.onBackground)
+                    Text(
+                        text = "Don't have an account?",
+                        color = Ash
+                    )
                     Spacer(modifier = Modifier.width(10.dp))
                     InteractionText(
                         text = "Get started",
-                        onClick = { /* ToDo: Handle click */ }
+                        color = Green,
+                        onClick = onNavigateToCreateAccount
                     )
                 }
             }
@@ -98,5 +122,8 @@ fun LoginScreen() {
 @Preview(showBackground = true)
 @Composable
 private fun LoginScreenPreview() {
-    LoginScreen()
+    LoginScreen(
+        onBack = {},
+        onNavigateToCreateAccount = {}
+    )
 }

@@ -20,17 +20,18 @@ import com.example.schoolink.ui.theme.*
 fun PasswordInputField(
     value: String,
     onValueChange: (String) -> Unit,
+    IsValid: (Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var isValid by remember { mutableStateOf(true) }
     var passwordVisible by remember { mutableStateOf(false) }
 
     LaunchedEffect(value) {
-        // Custom password validation logic
         isValid = value.length > 8 &&
                 value.any { it.isUpperCase() } &&
                 value.any { it.isDigit() || !it.isLetterOrDigit() } &&
                 !value.contains(' ')
+        IsValid(isValid)
     }
 
     val labelColor = when {

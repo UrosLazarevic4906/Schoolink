@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,16 +29,23 @@ import com.example.schoolink.ui.components.InteractionText
 import com.example.schoolink.ui.components.inputs.ConfirmPasswordInputField
 import com.example.schoolink.ui.components.inputs.EmailInputField
 import com.example.schoolink.ui.components.inputs.PasswordInputField
+import com.example.schoolink.ui.theme.DissabledButton
 import com.example.schoolink.ui.theme.SchoolinkTheme
 
 @Composable
-fun CreateAccountScreen() {
+fun CreateAccountScreen(
+    onBack: () -> Unit
+) {
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
 
+    var isEmailValid by remember { mutableStateOf(false) }
+    var isPasswordValid by remember { mutableStateOf(false) }
+
     val focusManager = LocalFocusManager.current
+    val isFormValid = isEmailValid && isPasswordValid
 
     SchoolinkTheme {
         Column(
@@ -62,18 +70,18 @@ fun CreateAccountScreen() {
             ) {
                 item {
                     AuthenticationHeader(
-                        onBackClick = { /* ToDo: handle on back click */ },
+                        onBackClick = onBack,
                         title = "Create an account",
                         description = "We’ll send you a verification code to your email in order to verify your account."
                     )
                 }
 
                 item {
-                    EmailInputField(value = email, onValueChange = { email = it })
+                    EmailInputField(value = email, IsValid = { isEmailValid = it}, onValueChange = { email = it })
                 }
 
                 item {
-                    PasswordInputField(value = password, onValueChange = { password = it })
+                    PasswordInputField(value = password, IsValid = { isPasswordValid = it} ,onValueChange = { password = it })
                 }
 
                 item {
@@ -92,11 +100,17 @@ fun CreateAccountScreen() {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Button(
-                    onClick = { /* ToDo: Handle create account click */ },
+                    onClick = { /* TODO: Handle create account click */ },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary,
+                        disabledContainerColor = DissabledButton,
+                        disabledContentColor = MaterialTheme.colorScheme.onPrimary
+                    ),
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(48.dp),
-                    enabled = confirmPassword == password && password.isNotEmpty(),
+                    enabled = confirmPassword == password && isFormValid,
                 ) {
                     Text(text = "Create account")
                 }
@@ -115,7 +129,7 @@ fun CreateAccountScreen() {
                     Row {
                         InteractionText(
                             text = "Terms & Conditions",
-                            onClick = { /* ToDo: Handle terms click */ }
+                            onClick = { /* TODO: Handle terms click */ }
                         )
                         Text(" and ", color = MaterialTheme.colorScheme.onBackground)
                         InteractionText(
@@ -136,6 +150,8 @@ fun CreateAccountScreen() {
 @Composable
 private fun CreateAccountPreview() {
 
-    CreateAccountScreen()
+    CreateAccountScreen(
+        onBack = {}
+    )
 
 }

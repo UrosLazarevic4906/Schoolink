@@ -27,9 +27,11 @@ import com.example.schoolink.ui.theme.Ash
 import com.example.schoolink.ui.theme.Black
 
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun OnboardingScreen() {
+fun OnboardingScreen(
+    onNavigationToLogin: () -> Unit,
+    onNavigationToCreateAccount: () -> Unit
+) {
     val pages = listOf(
         Triple(
             R.drawable.onboarding_support_solid,
@@ -143,7 +145,7 @@ fun OnboardingScreen() {
                     .padding(bottom = 52.dp)
             ) {
                 Button(
-                    onClick = { /* ToDo: Handle Create Account */ },
+                    onClick =  onNavigationToCreateAccount,
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.primary
                     ),
@@ -155,7 +157,7 @@ fun OnboardingScreen() {
                 }
 
                 Button(
-                    onClick = { /* ToDo: Handle Log In */ },
+                    onClick = onNavigationToLogin,
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.secondary
                     ),
@@ -174,6 +176,9 @@ fun OnboardingScreen() {
 @Preview(showBackground = true)
 @Composable
 fun PreviewOnboardingScreen() {
-    OnboardingScreen()
+    OnboardingScreen(
+        onNavigationToLogin = {},
+        onNavigationToCreateAccount = {}
+    )
 }
 

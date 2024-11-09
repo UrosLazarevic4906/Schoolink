@@ -16,6 +16,9 @@ val Yellow = Color(0xFFFFBE0B)
 val Pink = Color(0xFFEA9AB2)
 val Blue = Color(0xFF52D1DC)
 
+val DissabledButton = Color(0xFFE2A2B7)
+
+
 val White = Color(0xFFFFFFFF)
 val Cream = Color(0xFFF9F7F4)
 val Sand = Color(0xFFE3E2E0)
