@@ -9,9 +9,9 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.schoolink.ui.authentication.CreateAccountScreen
-import com.example.schoolink.ui.authentication.LoginScreen
-import com.example.schoolink.ui.onboarding.OnboardingScreen
+import com.example.schoolink.ui.screens.authentication.CreateAccountScreen
+import com.example.schoolink.ui.screens.authentication.LoginScreen
+import com.example.schoolink.ui.screens.onboarding.OnboardingScreen
 
 @Composable
 fun AppNavigation() {

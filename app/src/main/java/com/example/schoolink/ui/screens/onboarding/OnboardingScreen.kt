@@ -1,4 +1,4 @@
-package com.example.schoolink.ui.onboarding
+package com.example.schoolink.ui.screens.onboarding
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image

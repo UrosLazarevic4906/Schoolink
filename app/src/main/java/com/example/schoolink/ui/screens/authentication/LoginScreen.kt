@@ -1,4 +1,4 @@
-package com.example.schoolink.ui.authentication
+package com.example.schoolink.ui.screens.authentication
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.schoolink.ui.authentication.components.AuthenticationHeader
+import com.example.schoolink.ui.screens.authentication.components.AuthenticationHeader
 import com.example.schoolink.ui.components.InteractionText
 import com.example.schoolink.ui.components.inputs.EmailInputField
 import com.example.schoolink.ui.components.inputs.PasswordInputField
