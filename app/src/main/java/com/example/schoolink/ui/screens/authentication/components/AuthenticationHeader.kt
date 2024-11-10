@@ -1,4 +1,4 @@
-package com.example.schoolink.ui.authentication.components
+package com.example.schoolink.ui.screens.authentication.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
