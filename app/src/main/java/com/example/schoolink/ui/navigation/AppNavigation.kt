@@ -18,7 +18,7 @@ import com.example.schoolink.ui.screens.authentication.LoginScreen
 import com.example.schoolink.ui.screens.authentication.ProfessorInputScreen
 import com.example.schoolink.ui.screens.onboarding.OnboardingScreen
 import com.example.schoolink.ui.viewmodels.ProfessorViewModel
-import com.example.schoolink.ui.viewmodels.ProfessorViewModelFactory
+import com.example.schoolink.ui.viewmodels.factory.ProfessorViewModelFactory
 
 @Composable
 fun AppNavigation() {
