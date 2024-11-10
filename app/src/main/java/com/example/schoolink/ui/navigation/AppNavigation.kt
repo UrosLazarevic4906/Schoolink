@@ -11,17 +11,20 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.schoolink.data.database.AppDatabase
-import com.example.schoolink.domain.repository.ProfessorRepository
 import com.example.schoolink.ui.screens.authentication.CreateAccountScreen
 import com.example.schoolink.ui.screens.authentication.LoginScreen
 import com.example.schoolink.ui.screens.authentication.ProfessorInputScreen
+import com.example.schoolink.ui.screens.authentication.StudentInputScreen
 import com.example.schoolink.ui.screens.onboarding.OnboardingScreen
-import com.example.schoolink.ui.viewmodels.ProfessorViewModel
-import com.example.schoolink.ui.viewmodels.ProfessorViewModelFactory
+import com.example.schoolink.ui.viewmodels.*
+import com.example.schoolink.ui.viewmodels.factory.*
+import org.koin.androidx.compose.viewModel
 
 @Composable
-fun AppNavigation() {
+fun AppNavigation(
+    professorViewModelFactory: ProfessorViewModelFactory,
+    studentViewModelFactory: StudentViewModelFactory
+) {
     val navController = rememberNavController()
     val context = LocalContext.current
 
@@ -41,7 +44,7 @@ fun AppNavigation() {
                     navController.navigateSingleTopTo("login")
                 },
                 onNavigationToCreateAccount = {
-                    navController.navigateSingleTopTo("professorInput")
+                    navController.navigateSingleTopTo("studentInput")
                 }
             )
         }
@@ -126,15 +129,28 @@ fun AppNavigation() {
                 )
             }
         ) {
-            // Create the database and repository here
-            val database = AppDatabase.getInstance(context)
-            val repository = ProfessorRepository(database.professorDao())
 
-            // Use the ViewModel factory to create an instance of the ViewModel
-            val viewModelFactory = ProfessorViewModelFactory(repository)
-            val viewModel: ProfessorViewModel = viewModel(factory = viewModelFactory)
+            val professorViewModel: ProfessorViewModel = viewModel(factory = professorViewModelFactory)
+            ProfessorInputScreen(viewModel = professorViewModel, context = LocalContext.current)
+        }
 
-            ProfessorInputScreen(viewModel = viewModel, context = context)
+        composable(
+            route = "studentInput",
+            enterTransition = {
+                slideIntoContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Left,
+                    animationSpec = tween(1000)
+                )
+            },
+            exitTransition = {
+                slideOutOfContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Right,
+                    animationSpec = tween(1000)
+                )
+            }
+        ) {
+            val studentViewModel: StudentViewModel = viewModel(factory = studentViewModelFactory)
+            StudentInputScreen(viewModel = studentViewModel, context = LocalContext.current)
         }
     }
 }

@@ -6,13 +6,16 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.schoolink.data.dao.ProfessorDao
+import com.example.schoolink.data.dao.StudentDao
 import com.example.schoolink.data.entities.ProfessorEntity
+import com.example.schoolink.data.entities.StudentEntity
 import com.example.schoolink.data.database.converters.GenderTypeConverter
 
-@Database(entities = [ProfessorEntity::class], version = 1)
+@Database(entities = [ProfessorEntity::class, StudentEntity::class], version = 2)
 @TypeConverters(GenderTypeConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun professorDao(): ProfessorDao
+    abstract fun studentDao(): StudentDao
 
     companion object {
         @Volatile
