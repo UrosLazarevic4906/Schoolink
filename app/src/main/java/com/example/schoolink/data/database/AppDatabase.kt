@@ -27,7 +27,7 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "schoolink-db"
-                ).fallbackToDestructiveMigration() // Automatically recreates the database if the version changes
+                ).fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance
                 instance

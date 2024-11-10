@@ -36,7 +36,6 @@ fun StudentInputScreen(
     context: Context
 ) {
     var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
     var profileUri by remember { mutableStateOf<Uri?>(null) }
     var firstName by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
@@ -80,7 +79,6 @@ fun StudentInputScreen(
             }
         }
 
-        // Input Fields
         OutlinedTextField(
             label = { Text("Email") },
             value = email,
@@ -89,13 +87,6 @@ fun StudentInputScreen(
             modifier = Modifier.fillMaxWidth()
         )
 
-        OutlinedTextField(
-            label = { Text("Password") },
-            value = password,
-            onValueChange = { password = it },
-            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Password),
-            modifier = Modifier.fillMaxWidth()
-        )
 
         OutlinedTextField(
             label = { Text("First Name") },
@@ -111,7 +102,6 @@ fun StudentInputScreen(
             modifier = Modifier.fillMaxWidth()
         )
 
-        // Gender Picker (Simple Button-based Picker)
         Row(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
@@ -143,7 +133,6 @@ fun StudentInputScreen(
             modifier = Modifier.fillMaxWidth()
         )
 
-        // Save Button
         Button(
             onClick = {
                 val newStudent = StudentModel(
@@ -153,7 +142,6 @@ fun StudentInputScreen(
                     lastName = lastName,
                     gender = gender,
                     dateOfBirth = dateOfBirth,
-                    studentCode = "", // The student code will be generated in the repository
                     description = description
                 )
                 viewModel.addStudent(newStudent)

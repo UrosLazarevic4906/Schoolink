@@ -8,6 +8,6 @@ data class StudentModel(
     val lastName: String,
     val gender: Gender,
     val dateOfBirth: String,
-    val studentCode: String,
+    val studentCode: String = "",
     val description: String
 )
