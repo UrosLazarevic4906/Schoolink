@@ -54,12 +54,10 @@ fun ProfessorInputScreen(viewModel: ProfessorViewModel, context: Context) {
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        Box(
-            modifier = Modifier
-                .size(100.dp)
-                .background(Cream, CircleShape)
-                .clickable { launcher.launch("image/*") }
-        ) {
+        Box(modifier = Modifier
+            .size(100.dp)
+            .background(Cream, CircleShape)
+            .clickable { launcher.launch("image/*") }) {
             if (profileUri == null) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_user),
@@ -77,52 +75,36 @@ fun ProfessorInputScreen(viewModel: ProfessorViewModel, context: Context) {
             }
         }
 
-        OutlinedTextField(
-            value = firstName,
+        OutlinedTextField(value = firstName,
             onValueChange = { firstName = it },
-            label = { Text(text = "First Name") }
-        )
+            label = { Text(text = "First Name") })
 
-        OutlinedTextField(
-            value = lastName,
+        OutlinedTextField(value = lastName,
             onValueChange = { lastName = it },
-            label = { Text(text = "Last Name") }
-        )
+            label = { Text(text = "Last Name") })
 
-        OutlinedTextField(
-            value = email,
+        OutlinedTextField(value = email,
             onValueChange = { email = it },
-            label = { Text(text = "Email") }
-        )
+            label = { Text(text = "Email") })
 
-        OutlinedTextField(
-            value = password,
+        OutlinedTextField(value = password,
             onValueChange = { password = it },
-            label = { Text(text = "Password") }
-        )
+            label = { Text(text = "Password") })
 
         // Gender Picker Dropdown
         Box(modifier = Modifier.padding(top = 16.dp)) {
-            Text(
-                text = "Gender: ${gender.name}",
+            Text(text = "Gender: ${gender.name}",
                 modifier = Modifier
                     .clickable { expanded = true }
                     .background(Cream, CircleShape)
-                    .padding(8.dp)
-            )
+                    .padding(8.dp))
 
-            DropdownMenu(
-                expanded = expanded,
-                onDismissRequest = { expanded = false }
-            ) {
+            DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
                 Gender.entries.forEach { genderOption ->
-                    DropdownMenuItem(
-                        onClick = {
-                            gender = genderOption
-                            expanded = false
-                        },
-                        text = { Text(genderOption.name) }
-                    )
+                    DropdownMenuItem(onClick = {
+                        gender = genderOption
+                        expanded = false
+                    }, text = { Text(genderOption.name) })
                 }
             }
         }
@@ -135,7 +117,7 @@ fun ProfessorInputScreen(viewModel: ProfessorViewModel, context: Context) {
             val professor = ProfessorModel(
                 email = email,
                 password = password,
-                profilePicturePath =profileUri?.let { saveImageToInternalStorage(context, it) },
+                profilePicturePath = profileUri?.let { saveImageToInternalStorage(context, it) },
                 firstName = firstName,
                 lastName = lastName,
                 gender = gender,
