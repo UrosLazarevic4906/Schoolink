@@ -14,4 +14,7 @@ interface ProfessorDao{
 
     @Query("SELECT * FROM professors WHERE email = :email")
     suspend fun getProfessorByEmail(email: String): ProfessorEntity?
+
+    @Query("SELECT 1")
+    suspend fun pingDatabase(): Int
 }
