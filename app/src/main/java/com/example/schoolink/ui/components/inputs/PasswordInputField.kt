@@ -20,23 +20,23 @@ import com.example.schoolink.ui.theme.*
 fun PasswordInputField(
     value: String,
     onValueChange: (String) -> Unit,
-    IsValid: (Boolean) -> Unit,
+    isValid: (Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var isValid by remember { mutableStateOf(true) }
+    var valid by remember { mutableStateOf(true) }
     var passwordVisible by remember { mutableStateOf(false) }
 
     LaunchedEffect(value) {
-        isValid = value.length > 8 &&
+        valid = value.length > 8 &&
                 value.any { it.isUpperCase() } &&
                 value.any { it.isDigit() || !it.isLetterOrDigit() } &&
                 !value.contains(' ')
-        IsValid(isValid)
+        isValid(valid)
     }
 
     val labelColor = when {
         value.isEmpty() -> Smoke
-        isValid -> Green
+        valid -> Green
         else -> Color.Red
     }
 

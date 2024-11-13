@@ -8,6 +8,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -15,11 +16,13 @@ import com.example.schoolink.ui.theme.*
 
 @Composable
 fun OutlinedInputField(
+    modifier: Modifier = Modifier,
     value: String,
     label: String,
     onValueChange: (String) -> Unit,
-    modifier: Modifier = Modifier
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
 ) {
+
 
     OutlinedTextField(
         value = value,
@@ -28,10 +31,10 @@ fun OutlinedInputField(
         singleLine = true,
         modifier = modifier.fillMaxWidth(),
         keyboardOptions = KeyboardOptions.Default.copy(
-            imeAction = ImeAction.Next,
-            keyboardType = KeyboardType.Text
+            imeAction = ImeAction.Done,
+            keyboardType = KeyboardType.Text,
         ),
-        keyboardActions = KeyboardActions.Default,
+        keyboardActions = keyboardActions,
         colors = OutlinedTextFieldDefaults.colors(
             focusedBorderColor = MaterialTheme.colorScheme.secondary,
             unfocusedBorderColor = Smoke,

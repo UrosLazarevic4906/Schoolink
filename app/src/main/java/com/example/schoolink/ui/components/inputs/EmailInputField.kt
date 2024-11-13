@@ -20,19 +20,19 @@ import com.example.schoolink.ui.theme.*
 fun EmailInputField(
     value: String,
     onValueChange: (String) -> Unit,
-    IsValid: (Boolean) -> Unit,
+    isValid: (Boolean) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var isValid by remember { mutableStateOf(true) }
+    var valid by remember { mutableStateOf(true) }
 
     LaunchedEffect(value) {
-        isValid = Patterns.EMAIL_ADDRESS.matcher(value).matches()
-        IsValid(isValid)
+        valid = Patterns.EMAIL_ADDRESS.matcher(value).matches()
+        isValid(valid)
     }
 
     val labelColor = when {
         value.isEmpty() -> Smoke
-        isValid -> Green
+        valid -> Green
         else -> Color.Red
     }
 
