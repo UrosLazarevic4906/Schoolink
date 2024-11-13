@@ -14,6 +14,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.schoolink.ui.screens.authentication.CreateAccountScreen
 import com.example.schoolink.ui.screens.authentication.LoginScreen
 import com.example.schoolink.ui.screens.authentication.ProfessorInputScreen
+import com.example.schoolink.ui.screens.authentication.ProfessorSetupScreen
 import com.example.schoolink.ui.screens.authentication.StudentInputScreen
 import com.example.schoolink.ui.screens.onboarding.OnboardingScreen
 import com.example.schoolink.ui.viewmodels.*
@@ -44,7 +45,7 @@ fun AppNavigation(
                     navController.navigateSingleTopTo("login")
                 },
                 onNavigationToCreateAccount = {
-                    navController.navigateSingleTopTo("studentInput")
+                    navController.navigateSingleTopTo("createAccount")
                 }
             )
         }
@@ -107,50 +108,7 @@ fun AppNavigation(
                 )
             }
         ) {
-            CreateAccountScreen(
-                onBack = {
-                    navController.popBackStack()
-                }
-            )
-        }
-
-        composable(
-            route = "professorInput",
-            enterTransition = {
-                slideIntoContainer(
-                    AnimatedContentTransitionScope.SlideDirection.Left,
-                    animationSpec = tween(1000)
-                )
-            },
-            exitTransition = {
-                slideOutOfContainer(
-                    AnimatedContentTransitionScope.SlideDirection.Right,
-                    animationSpec = tween(1000)
-                )
-            }
-        ) {
-
-            val professorViewModel: ProfessorViewModel = viewModel(factory = professorViewModelFactory)
-            ProfessorInputScreen(viewModel = professorViewModel, context = LocalContext.current)
-        }
-
-        composable(
-            route = "studentInput",
-            enterTransition = {
-                slideIntoContainer(
-                    AnimatedContentTransitionScope.SlideDirection.Left,
-                    animationSpec = tween(1000)
-                )
-            },
-            exitTransition = {
-                slideOutOfContainer(
-                    AnimatedContentTransitionScope.SlideDirection.Right,
-                    animationSpec = tween(1000)
-                )
-            }
-        ) {
-            val studentViewModel: StudentViewModel = viewModel(factory = studentViewModelFactory)
-            StudentInputScreen(viewModel = studentViewModel, context = LocalContext.current)
+            ProfessorSetupScreen()
         }
     }
 }

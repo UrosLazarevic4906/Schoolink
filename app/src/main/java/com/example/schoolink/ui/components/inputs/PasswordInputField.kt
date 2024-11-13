@@ -13,7 +13,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import com.example.schoolink.R // Adjust import to match your package structure
+import com.example.schoolink.R
 import com.example.schoolink.ui.theme.*
 
 @Composable

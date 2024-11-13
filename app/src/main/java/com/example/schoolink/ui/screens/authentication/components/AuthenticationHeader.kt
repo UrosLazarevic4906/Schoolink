@@ -38,7 +38,8 @@ fun AuthenticationHeader(
         ) {
             Icon(
                 painter = painterResource(R.drawable.ic_chevron_left),
-                contentDescription = "Back"
+                contentDescription = "Back",
+                tint = Black
             )
         }
         Column (

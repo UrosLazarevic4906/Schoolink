@@ -1,6 +1,5 @@
 package com.example.schoolink.ui.screens.authentication
 
-import DateOfBirthPicker
 import android.content.Context
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -39,7 +38,7 @@ fun ProfessorInputScreen(viewModel: ProfessorViewModel, context: Context) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var gender by remember { mutableStateOf(Gender.MALE) }
-    var dateOfBirth by remember { mutableStateOf("") }
+    val dateOfBirth by remember { mutableStateOf("") }
     var profileUri by remember { mutableStateOf<Uri?>(null) }
     var expanded by remember { mutableStateOf(false) } // State to manage dropdown menu
 
@@ -91,7 +90,6 @@ fun ProfessorInputScreen(viewModel: ProfessorViewModel, context: Context) {
             onValueChange = { password = it },
             label = { Text(text = "Password") })
 
-        // Gender Picker Dropdown
         Box(modifier = Modifier.padding(top = 16.dp)) {
             Text(text = "Gender: ${gender.name}",
                 modifier = Modifier
@@ -109,9 +107,10 @@ fun ProfessorInputScreen(viewModel: ProfessorViewModel, context: Context) {
             }
         }
 
-        DateOfBirthPicker { selectedDate ->
-            dateOfBirth = selectedDate
-        }
+//        DateOfBirthPicker(
+//            dateOfBirth = dateOfBirth,
+//            onDateSelected = { dateOfBirth = it}
+//        )
 
         Button(onClick = {
             val professor = ProfessorModel(

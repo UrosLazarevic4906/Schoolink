@@ -3,7 +3,6 @@ package com.example.schoolink
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.lifecycle.lifecycleScope
 import com.example.schoolink.data.database.AppDatabase
 import com.example.schoolink.domain.repository.ProfessorRepository
 import com.example.schoolink.domain.repository.StudentRepository
@@ -11,17 +10,12 @@ import com.example.schoolink.ui.navigation.AppNavigation
 import com.example.schoolink.ui.theme.SchoolinkTheme
 import com.example.schoolink.ui.viewmodels.factory.ProfessorViewModelFactory
 import com.example.schoolink.ui.viewmodels.factory.StudentViewModelFactory
-import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val database = AppDatabase.getInstance(this)
-
-        lifecycleScope.launch {
-            database.professorDao().pingDatabase()
-        }
 
         val professorRepository = ProfessorRepository(database.professorDao())
         val studentRepository = StudentRepository(database.studentDao())
