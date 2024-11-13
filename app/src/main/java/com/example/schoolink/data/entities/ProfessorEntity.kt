@@ -13,10 +13,10 @@ data class ProfessorEntity(
     val email: String,
     val password: String,
     val profilePicturePath: String?,
-    val firstName: String,
-    val lastName: String,
-    val gender: Gender,
-    val dateOfBirth: String,
+    val firstName: String? = null,
+    val lastName: String? = null,
+    val gender: Gender? = null,
+    val dateOfBirth: String? = null,
 
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0
