@@ -20,25 +20,48 @@ fun OutlinedInputField(
     value: String,
     label: String,
     onValueChange: (String) -> Unit,
-    keyboardActions: KeyboardActions = KeyboardActions.Default,
+    isValid: (Boolean) -> Unit,
+//    keyboardActions: KeyboardActions = KeyboardActions.Default,
+    onDoneAction: () -> Unit = {}
 ) {
 
+    var valid by remember { mutableStateOf(true) }
+    LaunchedEffect(value) {
+        valid = value.isNotEmpty() &&
+                value[0].isUpperCase() &&
+                value.any { it.isLetter() } &&
+                value.drop(1).dropLast(1).all { it.isLowerCase() } &&
+                (value.last().isLowerCase() || value.last().isWhitespace())
+        isValid(valid)
+    }
 
+    val labelColor = when {
+        value.isEmpty() -> Smoke
+        valid -> Green
+        else -> Red
+    }
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
-        label = { Text(text = label) },
+        label = { Text(text = label, color = labelColor) },
         singleLine = true,
         modifier = modifier.fillMaxWidth(),
         keyboardOptions = KeyboardOptions.Default.copy(
             imeAction = ImeAction.Done,
             keyboardType = KeyboardType.Text,
         ),
-        keyboardActions = keyboardActions,
+        keyboardActions = KeyboardActions(
+            onDone = {
+                if (value.isNotEmpty() && value.last().isWhitespace()) {
+                    onValueChange(value.trimEnd())
+                }
+                onDoneAction()
+            },
+        ),
         colors = OutlinedTextFieldDefaults.colors(
             focusedBorderColor = MaterialTheme.colorScheme.secondary,
             unfocusedBorderColor = Smoke,
-            focusedLabelColor = Green,
+            focusedLabelColor = labelColor,
             unfocusedLabelColor = Smoke,
             cursorColor = MaterialTheme.colorScheme.secondary,
             focusedLeadingIconColor = MaterialTheme.colorScheme.secondary,

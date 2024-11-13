@@ -43,9 +43,9 @@ fun CreateAccountScreen(
 
     var isEmailValid by remember { mutableStateOf(false) }
     var isPasswordValid by remember { mutableStateOf(false) }
+    val isFormValid = isEmailValid && isPasswordValid && password == confirmPassword
 
     val focusManager = LocalFocusManager.current
-    val isFormValid = isEmailValid && isPasswordValid
 
     SchoolinkTheme {
         Column(
@@ -110,7 +110,7 @@ fun CreateAccountScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(48.dp),
-                    enabled = confirmPassword == password && isFormValid,
+                    enabled =  isFormValid,
                 ) {
                     Text(text = "Create account")
                 }

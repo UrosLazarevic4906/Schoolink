@@ -13,7 +13,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.schoolink.ui.screens.authentication.CreateAccountScreen
 import com.example.schoolink.ui.screens.authentication.LoginScreen
-import com.example.schoolink.ui.screens.authentication.ProfessorInputScreen
 import com.example.schoolink.ui.screens.authentication.ProfessorSetupScreen
 import com.example.schoolink.ui.screens.authentication.StudentInputScreen
 import com.example.schoolink.ui.screens.onboarding.OnboardingScreen

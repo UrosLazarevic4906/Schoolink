@@ -49,6 +49,10 @@ fun ProfessorSetupScreen(
     var gender by remember { mutableStateOf<Gender?>(null) }
     var dateOfBirth by remember { mutableStateOf("") }
 
+    var isNameValid by remember { mutableStateOf(false) }
+    var isLastNameValid by remember { mutableStateOf(false) }
+    val isFormValid = isNameValid && isLastNameValid && gender != null && dateOfBirth.isNotEmpty()
+
 
     val focusManager = LocalFocusManager.current
 
@@ -105,21 +109,21 @@ fun ProfessorSetupScreen(
                             value = firstName,
                             onValueChange = { firstName = it },
                             label = "First name",
-                            keyboardActions = KeyboardActions(
-                                onDone = {
-                                    focusManager.clearFocus()
-                                }
-                            )
+                            isValid = { isNameValid = it },
+                            onDoneAction = {
+                                focusManager.clearFocus()
+                            }
                         )
                         OutlinedInputField(
                             value = lastName,
                             onValueChange = { lastName = it },
                             label = "Last name",
-                            keyboardActions = KeyboardActions(
-                                onDone = {
-                                    focusManager.clearFocus()
-                                }
-                            )
+                            isValid = { isLastNameValid = it },
+
+                            onDoneAction = {
+                                focusManager.clearFocus()
+                            }
+
                         )
                         GenderSelectDropdown(
                             selectedGender = gender,
@@ -147,7 +151,7 @@ fun ProfessorSetupScreen(
             ) {
                 Button(
                     onClick = {/* TODO: */ },
-                    enabled = false, // TODO: set validity for fields
+                    enabled = isFormValid,
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.primary,
                         contentColor = MaterialTheme.colorScheme.onPrimary,
