@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
@@ -25,18 +26,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.compose.snippets.components.DatePickerFieldToModal
-import com.example.compose.snippets.components.DatePickerModal
 import com.example.schoolink.domain.models.Gender
+import com.example.schoolink.ui.components.inputs.DateOfBirthPicker
 import com.example.schoolink.ui.components.inputs.GenderSelectDropdown
 import com.example.schoolink.ui.components.inputs.ImagePicker
 import com.example.schoolink.ui.components.inputs.OutlinedInputField
-import com.example.schoolink.ui.screens.authentication.components.AuthenticationHeader
+import com.example.schoolink.ui.components.HeaderBack
 import com.example.schoolink.ui.theme.DissabledButton
 import com.example.schoolink.ui.theme.SchoolinkTheme
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+
 
 @Composable
 fun ProfessorSetupScreen(
@@ -48,20 +46,12 @@ fun ProfessorSetupScreen(
     var profilePictureUri by remember { mutableStateOf<Uri?>(null) }
     var firstName by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
-    var dateOfBirth by remember { mutableStateOf("") }
     var gender by remember { mutableStateOf<Gender?>(null) }
+    var dateOfBirth by remember { mutableStateOf("") }
 
-    var selectedDate by remember { mutableStateOf<String?>(null) }
 
     val focusManager = LocalFocusManager.current
 
-    if (selectedDate != null) {
-        val date = Date(selectedDate!!)
-        val formattedDate = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault()).format(date)
-        Text("Selected date: $formattedDate")
-    } else {
-        Text("No date selected")
-    }
 
     SchoolinkTheme {
         Column(
@@ -75,19 +65,18 @@ fun ProfessorSetupScreen(
                     indication = null,
                     interactionSource = remember { MutableInteractionSource() }
                 ),
-            verticalArrangement = Arrangement.SpaceBetween,
         ) {
 
             LazyColumn(
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(1f),
-                verticalArrangement = Arrangement.spacedBy(32.dp),
+                verticalArrangement = Arrangement.spacedBy(24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
                 item {
-                    AuthenticationHeader(
+                    HeaderBack(
                         onBackClick = {},
                         title = "First things first",
                         description = "Upload your photo and tell us your name, gender and when you were born"
@@ -107,33 +96,48 @@ fun ProfessorSetupScreen(
                 }
 
                 item {
-                    OutlinedInputField(
-                        value = firstName,
-                        onValueChange = { firstName = it },
-                        label = "First name"
-                    )
+                    Column(
+                        modifier = Modifier
+                            .padding(horizontal = 14.dp),
+                        verticalArrangement = Arrangement.spacedBy(10.dp)
+                    ) {
+                        OutlinedInputField(
+                            value = firstName,
+                            onValueChange = { firstName = it },
+                            label = "First name",
+                            keyboardActions = KeyboardActions(
+                                onDone = {
+                                    focusManager.clearFocus()
+                                }
+                            )
+                        )
+                        OutlinedInputField(
+                            value = lastName,
+                            onValueChange = { lastName = it },
+                            label = "Last name",
+                            keyboardActions = KeyboardActions(
+                                onDone = {
+                                    focusManager.clearFocus()
+                                }
+                            )
+                        )
+                        GenderSelectDropdown(
+                            selectedGender = gender,
+                            onGenderSelected = {
+                                gender = it
+                                focusManager.clearFocus()
+                            }
+                        )
+                        DateOfBirthPicker(
+                            dateOfBirth = dateOfBirth
+                        ) { selectedDate ->
+                            dateOfBirth = selectedDate
+                            focusManager.clearFocus()
+                        }
+                    }
+
                 }
 
-                item {
-                    OutlinedInputField(
-                        value = lastName,
-                        onValueChange = { lastName = it },
-                        label = "Last name"
-                    )
-                }
-
-                item {
-                    GenderSelectDropdown(
-                        selectedGender = gender,
-                        onGenderSelected = { gender = it }
-                    )
-                }
-
-                item {
-                    DatePickerFieldToModal(
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                }
             }
 
             Column(

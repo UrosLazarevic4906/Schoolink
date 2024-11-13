@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.schoolink.ui.screens.authentication.components.AuthenticationHeader
+import com.example.schoolink.ui.components.HeaderBack
 import com.example.schoolink.ui.components.InteractionText
 import com.example.schoolink.ui.components.inputs.EmailInputField
 import com.example.schoolink.ui.components.inputs.PasswordInputField
@@ -56,7 +56,7 @@ fun LoginScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 item {
-                    AuthenticationHeader(
+                    HeaderBack(
                         onBackClick = onBack,
                         title = "Welcome Back",
                         description = "Enter your email address and password to access your account."
@@ -66,14 +66,14 @@ fun LoginScreen(
                 item {
                     EmailInputField(
                         value = email,
-                        IsValid = { isEmailValid = it },
+                        isValid = { isEmailValid = it },
                         onValueChange = { email = it })
                 }
 
                 item {
                     PasswordInputField(
                         value = password,
-                        IsValid = { isPasswordValid = it },
+                        isValid = { isPasswordValid = it },
                         onValueChange = { password = it })
                 }
             }
