@@ -1,6 +1,5 @@
 package com.example.schoolink.ui.components.inputs
 
-import android.util.Patterns
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -11,42 +10,54 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import com.example.schoolink.ui.theme.*
 
 @Composable
-fun EmailInputField(
+fun OutlinedInputField(
+    modifier: Modifier = Modifier,
     value: String,
+    label: String,
     onValueChange: (String) -> Unit,
     isValid: (Boolean) -> Unit,
-    modifier: Modifier = Modifier
+//    keyboardActions: KeyboardActions = KeyboardActions.Default,
+    onDoneAction: () -> Unit = {}
 ) {
-    var valid by remember { mutableStateOf(true) }
 
+    var valid by remember { mutableStateOf(true) }
     LaunchedEffect(value) {
-        valid = Patterns.EMAIL_ADDRESS.matcher(value).matches()
+        valid = value.isNotEmpty() &&
+                value[0].isUpperCase() &&
+                value.any { it.isLetter() } &&
+                value.drop(1).dropLast(1).all { it.isLowerCase() } &&
+                (value.last().isLowerCase() || value.last().isWhitespace())
         isValid(valid)
     }
 
     val labelColor = when {
         value.isEmpty() -> Smoke
         valid -> Green
-        else -> Color.Red
+        else -> Red
     }
-
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
-        label = { Text(text = "Email Address", color = labelColor) },
+        label = { Text(text = label, color = labelColor) },
         singleLine = true,
         modifier = modifier.fillMaxWidth(),
         keyboardOptions = KeyboardOptions.Default.copy(
-            imeAction = ImeAction.Next,
-            keyboardType = KeyboardType.Email
+            imeAction = ImeAction.Done,
+            keyboardType = KeyboardType.Text,
         ),
-        keyboardActions = KeyboardActions.Default,
+        keyboardActions = KeyboardActions(
+            onDone = {
+                if (value.isNotEmpty() && value.last().isWhitespace()) {
+                    onValueChange(value.trimEnd())
+                }
+                onDoneAction()
+            },
+        ),
         colors = OutlinedTextFieldDefaults.colors(
             focusedBorderColor = MaterialTheme.colorScheme.secondary,
             unfocusedBorderColor = Smoke,

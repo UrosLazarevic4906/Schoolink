@@ -1,4 +1,4 @@
-package com.example.schoolink.ui.authentication.components
+package com.example.schoolink.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,7 +22,7 @@ import com.example.schoolink.ui.theme.Ash
 import com.example.schoolink.ui.theme.Black
 
 @Composable
-fun AuthenticationHeader(
+fun HeaderBack(
     onBackClick: () -> Unit,
     title: String,
     description: String
@@ -38,7 +38,8 @@ fun AuthenticationHeader(
         ) {
             Icon(
                 painter = painterResource(R.drawable.ic_chevron_left),
-                contentDescription = "Back"
+                contentDescription = "Back",
+                tint = Black
             )
         }
         Column (
@@ -70,9 +71,10 @@ fun AuthenticationHeader(
 @Preview
 @Composable
 private fun AuthenticationHeaderPreview() {
-    AuthenticationHeader(
+    HeaderBack(
         onBackClick = {},
         title = "Create an account",
         description = "We’ll sent you a verification code to your email in order to verify your account."
     )
 }
+

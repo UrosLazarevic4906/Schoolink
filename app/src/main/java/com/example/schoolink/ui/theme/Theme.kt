@@ -9,8 +9,8 @@ private val LightColorScheme = lightColorScheme(
     secondary = Green,
     tertiary = Yellow,
 
-    background = Cream,
-    surface = White,
+    background = White,
+    surface = Cream,
 
     onPrimary = White,
     onSecondary = White,

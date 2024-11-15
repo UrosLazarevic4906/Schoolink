@@ -5,17 +5,29 @@ import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.schoolink.ui.authentication.CreateAccountScreen
-import com.example.schoolink.ui.authentication.LoginScreen
-import com.example.schoolink.ui.onboarding.OnboardingScreen
+import com.example.schoolink.ui.screens.authentication.CreateAccountScreen
+import com.example.schoolink.ui.screens.authentication.LoginScreen
+import com.example.schoolink.ui.screens.authentication.ProfessorInputScreen
+import com.example.schoolink.ui.screens.authentication.ProfessorSetupScreen
+import com.example.schoolink.ui.screens.authentication.StudentInputScreen
+import com.example.schoolink.ui.screens.onboarding.OnboardingScreen
+import com.example.schoolink.ui.viewmodels.*
+import com.example.schoolink.ui.viewmodels.factory.*
+import org.koin.androidx.compose.viewModel
 
 @Composable
-fun AppNavigation() {
+fun AppNavigation(
+    professorViewModelFactory: ProfessorViewModelFactory,
+    studentViewModelFactory: StudentViewModelFactory
+) {
     val navController = rememberNavController()
+    val context = LocalContext.current
 
     NavHost(
         navController = navController,
