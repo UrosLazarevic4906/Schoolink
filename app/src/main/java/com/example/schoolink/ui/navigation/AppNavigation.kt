@@ -108,7 +108,11 @@ fun AppNavigation(
                 )
             }
         ) {
-            ProfessorSetupScreen()
+            CreateAccountScreen(
+                onBack = {
+                    navController.popBackStack()
+                }
+            )
         }
     }
 }

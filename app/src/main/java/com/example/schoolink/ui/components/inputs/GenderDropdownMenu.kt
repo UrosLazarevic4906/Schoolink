@@ -1,15 +1,11 @@
 package com.example.schoolink.ui.components.inputs
 
-import android.widget.Toast
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -48,7 +44,7 @@ fun GenderSelectDropdown(
                             id = if (isExpanded) R.drawable.ic_chevron_up else R.drawable.ic_chevron_down
                         ),
                         contentDescription = null,
-                        tint = Black,
+                        tint = Smoke,
                         modifier = Modifier.size(24.dp)
                     )
                 },
@@ -56,7 +52,7 @@ fun GenderSelectDropdown(
                     focusedBorderColor = MaterialTheme.colorScheme.secondary,
                     unfocusedBorderColor = Smoke,
                     focusedLabelColor = Green,
-                    unfocusedLabelColor = Smoke,
+                    unfocusedLabelColor = if(selectedGender == null) Smoke else Green,
                     cursorColor = MaterialTheme.colorScheme.secondary,
                     focusedLeadingIconColor = MaterialTheme.colorScheme.secondary,
                     focusedTrailingIconColor = MaterialTheme.colorScheme.secondary
@@ -92,3 +88,4 @@ private fun GenderSelectDropdownPreview() {
         selectedGender = Gender.MALE
     )
 }
+

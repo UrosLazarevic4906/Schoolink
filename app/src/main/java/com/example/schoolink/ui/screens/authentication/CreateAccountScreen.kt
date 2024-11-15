@@ -24,7 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.schoolink.ui.screens.authentication.components.AuthenticationHeader
+import com.example.schoolink.ui.components.HeaderBack
 import com.example.schoolink.ui.components.InteractionText
 import com.example.schoolink.ui.components.inputs.ConfirmPasswordInputField
 import com.example.schoolink.ui.components.inputs.EmailInputField
@@ -69,7 +69,7 @@ fun CreateAccountScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 item {
-                    AuthenticationHeader(
+                    HeaderBack(
                         onBackClick = onBack,
                         title = "Create an account",
                         description = "We’ll send you a verification code to your email in order to verify your account."
@@ -77,11 +77,11 @@ fun CreateAccountScreen(
                 }
 
                 item {
-                    EmailInputField(value = email, IsValid = { isEmailValid = it}, onValueChange = { email = it })
+                    EmailInputField(value = email, isValid = { isEmailValid = it}, onValueChange = { email = it })
                 }
 
                 item {
-                    PasswordInputField(value = password, IsValid = { isPasswordValid = it} ,onValueChange = { password = it })
+                    PasswordInputField(value = password, isValid = { isPasswordValid = it} ,onValueChange = { password = it })
                 }
 
                 item {
