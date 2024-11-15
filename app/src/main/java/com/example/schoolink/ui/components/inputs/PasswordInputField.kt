@@ -70,3 +70,4 @@ fun PasswordInputField(
     )
 }
 
+// TODO: Add trailing icon and text below the input field if field is not valid
