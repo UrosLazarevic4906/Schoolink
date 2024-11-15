@@ -22,9 +22,17 @@ class ProfessorViewModel(private val repository: ProfessorRepository) : ViewMode
         }
     }
 
-    fun addProfessor(professor: ProfessorModel) {
+    fun updateProfessor(professor: ProfessorModel) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.insertProfessor(professor)
+            repository.updateProfessor(professor)
         }
     }
+
+    fun createProfessor(professor: ProfessorModel) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.createProfessor(professor)
+        }
+    }
+
+
 }

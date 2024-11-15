@@ -1,5 +1,6 @@
 package com.example.schoolink.ui.screens.authentication
 
+import android.content.Context
 import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -23,7 +24,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.schoolink.domain.models.Gender
 import com.example.schoolink.ui.components.inputs.DateOfBirthPicker
@@ -33,13 +33,16 @@ import com.example.schoolink.ui.components.inputs.OutlinedInputField
 import com.example.schoolink.ui.components.HeaderBack
 import com.example.schoolink.ui.theme.DissabledButton
 import com.example.schoolink.ui.theme.SchoolinkTheme
+import com.example.schoolink.ui.viewmodels.ProfessorViewModel
+import com.example.schoolink.utils.saveImageToInternalStorage
 
 
 @Composable
 fun ProfessorSetupScreen(
-//    viewModel: ProfessorViewModel,
-//    onProfileComplete: () -> Unit
-    // onBack: () -> Unit
+    email: String,
+    onBack: () -> Unit,
+    viewModel: ProfessorViewModel,
+    context: Context
 ) {
 
     var profilePictureUri by remember { mutableStateOf<Uri?>(null) }
@@ -80,7 +83,7 @@ fun ProfessorSetupScreen(
 
                 item {
                     HeaderBack(
-                        onBackClick = {},
+                        onBackClick = onBack,
                         title = "First things first",
                         description = "Upload your photo and tell us your name, gender and when you were born"
                     )
@@ -149,7 +152,23 @@ fun ProfessorSetupScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Button(
-                    onClick = {/* TODO: */ },
+                    onClick = {/* TODO: */
+                        viewModel.getProfessorByEmail(email) { existingProfessor ->
+                            existingProfessor?.let {
+                                val professor = it.copy(
+                                    firstName = firstName,
+                                    lastName = lastName,
+                                    gender = gender,
+                                    dateOfBirth = dateOfBirth,
+                                    profilePicturePath = profilePictureUri?.let { uri ->
+                                        saveImageToInternalStorage(context, uri)
+                                    }
+                                )
+                                viewModel.updateProfessor(professor)
+                            }
+
+                        }
+                    },
                     enabled = isFormValid,
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.primary,
@@ -169,11 +188,11 @@ fun ProfessorSetupScreen(
     }
 
 }
-
-@Preview(showBackground = true)
-@Composable
-private fun ProfessorSetupScreenPreview() {
-    ProfessorSetupScreen(
-//        onProfileComplete = {}
-    )
-}
+//
+//@Preview(showBackground = true)
+//@Composable
+//private fun ProfessorSetupScreenPreview() {
+//    ProfessorSetupScreen(
+////        onProfileComplete = {}
+//    )
+//}

@@ -7,9 +7,14 @@ import com.example.schoolink.domain.models.ProfessorModel
 class ProfessorRepository(
     private val professorDao: ProfessorDao
 ) {
-    suspend fun insertProfessor(professorModel: ProfessorModel) {
+    suspend fun createProfessor(professorModel: ProfessorModel) {
         val entity = ProfessorMapper.fromModelToEntity(professorModel)
-        professorDao.insertProfessor(entity)
+        professorDao.createProfessor(entity)
+    }
+
+    suspend fun updateProfessor(professorModel: ProfessorModel) {
+        val entity = ProfessorMapper.fromModelToEntity(professorModel)
+        professorDao.updateProfessor(entity)
     }
 
     suspend fun getProfessorByEmail(email: String): ProfessorModel? {

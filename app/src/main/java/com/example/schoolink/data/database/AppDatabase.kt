@@ -11,11 +11,10 @@ import com.example.schoolink.data.entities.ProfessorEntity
 import com.example.schoolink.data.entities.StudentEntity
 import com.example.schoolink.data.database.converters.GenderTypeConverter
 
-@Database(entities = [ProfessorEntity::class, StudentEntity::class], version = 2)
+@Database(entities = [ProfessorEntity::class], version = 3)
 @TypeConverters(GenderTypeConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun professorDao(): ProfessorDao
-    abstract fun studentDao(): StudentDao
 
     companion object {
         @Volatile
@@ -27,7 +26,8 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "schoolink-db"
-                ).fallbackToDestructiveMigration()
+                ).
+                fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance
                 instance
