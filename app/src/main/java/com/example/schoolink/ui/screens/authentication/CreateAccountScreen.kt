@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.schoolink.domain.models.ProfessorModel
 import com.example.schoolink.ui.components.HeaderBack
 import com.example.schoolink.ui.components.InteractionText
 import com.example.schoolink.ui.components.inputs.ConfirmPasswordInputField
@@ -31,10 +32,13 @@ import com.example.schoolink.ui.components.inputs.EmailInputField
 import com.example.schoolink.ui.components.inputs.PasswordInputField
 import com.example.schoolink.ui.theme.DissabledButton
 import com.example.schoolink.ui.theme.SchoolinkTheme
+import com.example.schoolink.ui.viewmodels.ProfessorViewModel
 
 @Composable
 fun CreateAccountScreen(
-    onBack: () -> Unit
+    viewModel: ProfessorViewModel,
+    onBack: () -> Unit,
+    onCreateAccount: (String) -> Unit
 ) {
 
     var email by remember { mutableStateOf("") }
@@ -45,7 +49,7 @@ fun CreateAccountScreen(
     var isPasswordValid by remember { mutableStateOf(false) }
 
     val focusManager = LocalFocusManager.current
-    val isFormValid = isEmailValid && isPasswordValid
+    val isFormValid = isEmailValid && isPasswordValid && confirmPassword == password
 
     SchoolinkTheme {
         Column(
@@ -77,11 +81,17 @@ fun CreateAccountScreen(
                 }
 
                 item {
-                    EmailInputField(value = email, isValid = { isEmailValid = it}, onValueChange = { email = it })
+                    EmailInputField(
+                        value = email,
+                        isValid = { isEmailValid = it },
+                        onValueChange = { email = it })
                 }
 
                 item {
-                    PasswordInputField(value = password, isValid = { isPasswordValid = it} ,onValueChange = { password = it })
+                    PasswordInputField(
+                        value = password,
+                        isValid = { isPasswordValid = it },
+                        onValueChange = { password = it })
                 }
 
                 item {
@@ -100,7 +110,19 @@ fun CreateAccountScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Button(
-                    onClick = { /* TODO: Handle create account click */ },
+                    onClick = { /* TODO: Handle create account click */
+                        viewModel.getProfessorByEmail(email) { existingProfessor ->
+
+                            if (existingProfessor == null) {
+                                val professor = ProfessorModel(
+                                    email = email,
+                                    password = password
+                                )
+                                viewModel.createProfessor(professor)
+                                onCreateAccount(professor.email)
+                            }
+                        }
+                    },
                     colors = ButtonDefaults.buttonColors(
                         containerColor = MaterialTheme.colorScheme.primary,
                         contentColor = MaterialTheme.colorScheme.onPrimary,
@@ -110,7 +132,7 @@ fun CreateAccountScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(48.dp),
-                    enabled = confirmPassword == password && isFormValid,
+                    enabled =  isFormValid,
                 ) {
                     Text(text = "Create account")
                 }
@@ -140,7 +162,6 @@ fun CreateAccountScreen(
                 }
 
 
-
             }
         }
     }
@@ -150,8 +171,8 @@ fun CreateAccountScreen(
 @Composable
 private fun CreateAccountPreview() {
 
-    CreateAccountScreen(
-        onBack = {}
-    )
+//    CreateAccountScreen(
+////        onBack = {}
+//    )
 
 }

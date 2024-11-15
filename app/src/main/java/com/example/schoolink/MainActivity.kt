@@ -11,23 +11,20 @@ import com.example.schoolink.ui.theme.SchoolinkTheme
 import com.example.schoolink.ui.viewmodels.factory.ProfessorViewModelFactory
 import com.example.schoolink.ui.viewmodels.factory.StudentViewModelFactory
 
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         val database = AppDatabase.getInstance(this)
 
         val professorRepository = ProfessorRepository(database.professorDao())
-        val studentRepository = StudentRepository(database.studentDao())
 
         val professorViewModelFactory = ProfessorViewModelFactory(professorRepository)
-        val studentViewModelFactory = StudentViewModelFactory(studentRepository)
 
         setContent {
             SchoolinkTheme {
                 AppNavigation(
                     professorViewModelFactory = professorViewModelFactory,
-                    studentViewModelFactory = studentViewModelFactory
                 )
             }
         }
